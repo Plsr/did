@@ -13,14 +13,18 @@ function create_did_file() {
 function date_present() {
   did=`cat $DID_FILE_PATH`
   matches=`grep $1 $DID_FILE_PATH -F -x -c`
-  if [ $matches >= 1 ]; then
-    return 1
-  else
+  if [[ $matches -ge 1 ]]; then
     return 0
+  else
+    return 1
   fi
 }
 
 # MAIN
+# Things for the future:
+# - Check if there is a newline at the end of the file
+#   If not, add it and place the curser there
+# - Open vim in insert mode if possible
 if [ -f "$DID_FILE_PATH" ]; then
   # List of arguments possible (in the future)
   # -o open
@@ -31,10 +35,16 @@ if [ -f "$DID_FILE_PATH" ]; then
   # get the above working first
   date=$(date +"%m-%d-%y")
   if date_present $date; then
-    # TODO: Get actual line we need
-    vi +2 $DID_FILE_PATH
+    line=`grep $date $DID_FILE_PATH -F -x -n | cut -d : -f 1`
+    vi +$line $DID_FILE_PATH
   else
-    echo 'foo' # need to do something here to prevent error
+    # Add the date as a headline to end of file
+    # Then open editor
+    echo -en '\n' >> $DID_FILE_PATH
+    echo $date >> $DID_FILE_PATH
+    echo -en '\n' >> $DID_FILE_PATH
+    line=`wc -l $DID_FILE_PATH | cur -d : -f 1`
+    vi +$line $DID_FILE_PATH
   fi
 else 
   create_did_file
