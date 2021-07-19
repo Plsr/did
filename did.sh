@@ -25,6 +25,7 @@ function date_present() {
 # - Check if there is a newline at the end of the file
 #   If not, add it and place the curser there
 # - Open vim in insert mode if possible
+# - Make did file path configurable somehow
 if [ -f "$DID_FILE_PATH" ]; then
   # List of arguments possible (in the future)
   # -o open
