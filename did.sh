@@ -42,11 +42,14 @@ function open_at_current_date() {
 #   If not, add it and place the curser there
 # - Make did file path configurable somehow
 # - Make editor configureable (probably best to use $EDITOR)
-# List of arguments possible (in the future)
-# -o open
-# -d add at date
-# -D open at date
-# -g get for date
+#   - See if $VISUAL is set, if so use that
+#   - If not, see if $EDITOR is set and use that
+#   - If none is set, just use vi
+# - allow List of arguments
+#   -o open
+#   -d add at date
+#   -D open at date
+#   -g get for date
 # none matching: add string as bullet point for today
 # get the above working first
 if ! [ -f "$DID_FILE_PATH" ]; then
