@@ -20,20 +20,7 @@ function date_present() {
   fi
 }
 
-# MAIN
-# Things for the future:
-# - Check if there is a newline at the end of the file
-#   If not, add it and place the curser there
-# - Make did file path configurable somehow
-# - Make editor configureable (probably best to use $EDITOR)
-if [ -f "$DID_FILE_PATH" ]; then
-  # List of arguments possible (in the future)
-  # -o open
-  # -d add at date
-  # -D open at date
-  # -g get for date
-  # none matching: add string as bullet point for today
-  # get the above working first
+function add_to_current_date() {
   date=$(date +"%m-%d-%y")
   if date_present $date; then
     line=`grep $date $DID_FILE_PATH -F -x -n | cut -d : -f 1`
@@ -47,9 +34,23 @@ if [ -f "$DID_FILE_PATH" ]; then
     line=`wc -l $DID_FILE_PATH | cur -d : -f 1`
     vi +$line $DID_FILE_PATH
   fi
-else 
-  # TODO: This should not be the end of the program if no did file
-  # is present yet
+}
+
+# MAIN
+# Things for the future:
+# - Check if there is a newline at the end of the file
+#   If not, add it and place the curser there
+# - Make did file path configurable somehow
+# - Make editor configureable (probably best to use $EDITOR)
+# List of arguments possible (in the future)
+# -o open
+# -d add at date
+# -D open at date
+# -g get for date
+# none matching: add string as bullet point for today
+# get the above working first
+if ! [ -f "$DID_FILE_PATH" ]; then
   create_did_file
 fi
+add_to_current_date
 
