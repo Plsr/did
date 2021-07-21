@@ -20,7 +20,7 @@ function date_present() {
   fi
 }
 
-function add_to_current_date() {
+function open_at_current_date() {
   date=$(date +"%m-%d-%y")
   if date_present $date; then
     line=`grep $date $DID_FILE_PATH -F -x -n | cut -d : -f 1`
@@ -52,5 +52,5 @@ function add_to_current_date() {
 if ! [ -f "$DID_FILE_PATH" ]; then
   create_did_file
 fi
-add_to_current_date
+open_at_current_date
 
