@@ -24,8 +24,8 @@ function date_present() {
 # Things for the future:
 # - Check if there is a newline at the end of the file
 #   If not, add it and place the curser there
-# - Open vim in insert mode if possible
 # - Make did file path configurable somehow
+# - Make editor configureable (probably best to use $EDITOR)
 if [ -f "$DID_FILE_PATH" ]; then
   # List of arguments possible (in the future)
   # -o open
@@ -37,7 +37,7 @@ if [ -f "$DID_FILE_PATH" ]; then
   date=$(date +"%m-%d-%y")
   if date_present $date; then
     line=`grep $date $DID_FILE_PATH -F -x -n | cut -d : -f 1`
-    vi +$line $DID_FILE_PATH
+    vi +$line $DID_FILE_PATH 
   else
     # Add the date as a headline to end of file
     # Then open editor
@@ -48,6 +48,8 @@ if [ -f "$DID_FILE_PATH" ]; then
     vi +$line $DID_FILE_PATH
   fi
 else 
+  # TODO: This should not be the end of the program if no did file
+  # is present yet
   create_did_file
 fi
 
